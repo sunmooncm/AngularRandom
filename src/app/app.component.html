@@ -1,0 +1,25 @@
+<!-- NG-ZORRO -->
+ <nz-layout class="layout">
+      <nz-header>
+
+        <nz-avatar [nzText]="title" nzSize="large" [ngStyle]="{'background-color':'#f56a00'}" style="vertical-align: middle;" routerLink="/home"></nz-avatar>
+        <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 64px;">
+
+          <li nz-menu-item><a routerLink="/inputdata">加载数据</a></li>
+          <li nz-menu-item><a routerLink="/randomchioce">随机抽取</a></li>
+          <li nz-menu-item><a routerLink="/outputresult">导出结果</a></li>
+
+        </ul>
+      </nz-header>
+      <nz-content style="padding:0 50px;">
+        <nz-breadcrumb style="margin:16px 0;">
+          <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+          <nz-breadcrumb-item>List</nz-breadcrumb-item>
+          <nz-breadcrumb-item>App</nz-breadcrumb-item>
+        </nz-breadcrumb>
+        <div style="background:LightSteelBlue ; padding: 24px; ">
+        <router-outlet></router-outlet>
+        </div>
+      </nz-content>
+      <nz-footer style="text-align: center;">Sunmooncm Design ©2019 </nz-footer>
+    </nz-layout>
