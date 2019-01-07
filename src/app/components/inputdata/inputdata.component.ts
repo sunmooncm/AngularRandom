@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadOrigeDataService } from '../../services/load-orige-data.service';
+import { Businese } from '../../class/businese';
 
 @Component({
   selector: 'app-inputdata',
@@ -7,62 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InputdataComponent implements OnInit {
 
-  allChecked = false;
-  // tslint:disable-next-line:member-ordering
-  indeterminate = false;
-  displayData = [];
-  data = [
-    {
-      name    : 'John Brown',
-      age     : 32,
-      address : 'New York No. 1 Lake Park',
-      checked : false,
-      disabled: false
-    },
-    {
-      name    : 'Jim Green',
-      age     : 42,
-      address : 'London No. 1 Lake Park',
-      checked : false,
-      disabled: false
-    },
-    {
-      name    : 'Joe Black',
-      age     : 32,
-      address : 'Sidney No. 1 Lake Park',
-      checked : false,
-      disabled: false
-    },
-    {
-      name    : 'Disabled User',
-      age     : 32,
-      address : 'Sidney No. 1 Lake Park',
-      checked : false,
-      disabled: true
+  geturl = 'https://localhost:44375/api/dorandom/';
+  dataSet: Businese[] = [];
+  constructor(private LoadOrigeData: LoadOrigeDataService) { }
+
+  ngOnInit() { }
+  // 图片上传返回
+  bindingdata(info) {
+    if (info.file.status === 'done') {  // 订阅型的EventEmitter  https://www.cnblogs.com/Martincheng/p/10182426.html
+      // alert(info.file.status);
+     this.LoadOrigeData.getbusinessdata(this.geturl).subscribe(data => {     // 这里来 subscribe
+       this.dataSet = data as Businese[] ;
+     });
+      // this.dataSet[1].id = '10000' ;
+    //  console.log(this.dataSet.length);
     }
-  ];
-  constructor() {  }
-
-  ngOnInit() {  }
-
-  currentPageDataChange($event: Array<{ name: string; age: number; address: string; checked: boolean; disabled: boolean; }>): void {
-    this.displayData = $event;
-    this.refreshStatus();
-  }
-
-  refreshStatus(): void {
-    const allChecked = this.displayData.filter(value => !value.disabled).every(value => value.checked === true);
-    const allUnChecked = this.displayData.filter(value => !value.disabled).every(value => !value.checked);
-    this.allChecked = allChecked;
-    this.indeterminate = (!allChecked) && (!allUnChecked);
-  }
-
-  checkAll(value: boolean): void {
-    this.displayData.forEach(data => {
-      if (!data.disabled) {
-        data.checked = value;
-      }
-    });
-    this.refreshStatus();
   }
 }
